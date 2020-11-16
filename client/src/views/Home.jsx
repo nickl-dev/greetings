@@ -1,15 +1,12 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { Grid } from "semantic-ui-react";
+import { Grid, Transition } from "semantic-ui-react";
 
 import PostCard from "../components/PostCard";
 
 const Home = () => {
-  const {
-    loading,
-    data: { getPosts: posts },
-  } = useQuery(FETCH_POSTS_QUERY);
+  const { loading, data } = useQuery(FETCH_POSTS_QUERY);
   return (
     <div>
       <Grid columns={3}>
@@ -20,12 +17,14 @@ const Home = () => {
           {loading ? (
             <h1>Loading posts...</h1>
           ) : (
-            posts &&
-            posts.map((post) => (
-              <Grid.Column key={post.id} style={{ marginBottom: "20px" }}>
-                <PostCard post={post}></PostCard>
-              </Grid.Column>
-            ))
+            <Transition.Group>
+              {data &&
+                data.map((post) => (
+                  <Grid.Column key={post.id} style={{ marginBottom: 20 }}>
+                    <PostCard post={post} />
+                  </Grid.Column>
+                ))}
+            </Transition.Group>
           )}
         </Grid.Row>
       </Grid>
