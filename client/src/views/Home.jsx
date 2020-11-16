@@ -6,7 +6,10 @@ import { Grid, Transition } from "semantic-ui-react";
 import PostCard from "../components/PostCard";
 
 const Home = () => {
-  const { loading, data } = useQuery(FETCH_POSTS_QUERY);
+  const {
+    loading,
+    data: { getPosts: posts },
+  } = useQuery(FETCH_POSTS_QUERY);
   return (
     <div>
       <Grid columns={3}>
@@ -18,8 +21,8 @@ const Home = () => {
             <h1>Loading posts...</h1>
           ) : (
             <Transition.Group>
-              {data &&
-                data.map((post) => (
+              {posts &&
+                posts.map((post) => (
                   <Grid.Column key={post.id} style={{ marginBottom: 20 }}>
                     <PostCard post={post} />
                   </Grid.Column>
