@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import Home from "./views/Home";
 import Register from "./views/Register";
 import Login from "./views/Login";
+import SinglePost from "./views/SinglePost";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route exact path="/" component={Home} />
             <AuthRoute exact path="/login" component={Login} />
             <AuthRoute exact path="/register" component={Register} />
+            <Route exact path="/posts/:postId" component={SinglePost} />
           </Switch>
         </Container>
       </BrowserRouter>

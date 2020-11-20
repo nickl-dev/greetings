@@ -1,6 +1,6 @@
 # Greetings
 
-## Greetings, everyone! 👋 Welcome to...Greetings, which is a social media application where users can register, login, create posts as well as comment and like other users' posts. Built with React.js, Semantic UI, Express.js, Apollo, GraphQL and MongoDB.
+Greetings, everyone! 👋 Welcome to...Greetings, which is a social media application where users can register, login, create posts as well as comment on and like other users' posts. Built with React.js, Semantic UI, Express.js, Apollo, GraphQL and MongoDB.
 
 ### Available Scripts
 
