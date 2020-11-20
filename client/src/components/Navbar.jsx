@@ -13,7 +13,7 @@ const Navbar = () => {
   const handleItemClick = (e, { name }) => setActiveItem(name);
 
   const navBar = user ? (
-    <Menu pointing secondary size="large" color="teal">
+    <Menu pointing secondary size="large" color="black">
       <Menu.Item name={user.username} active to="/" />
       <Menu.Menu position="right">
         <Menu.Item name="logout" onClick={logout} />
