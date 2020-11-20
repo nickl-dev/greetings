@@ -3,9 +3,9 @@ import { Card, Icon, Label, Image, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-const PostCard = ({
+function PostCard({
   post: { body, createdAt, id, username, likeCount, commentCount, likes },
-}) => {
+}) {
   const likePost = () => {};
   const commentOnPost = () => {};
   return (
@@ -42,6 +42,6 @@ const PostCard = ({
       </Card.Content>
     </Card>
   );
-};
+}
 
 export default PostCard;

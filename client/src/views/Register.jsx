@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { Form, Button } from "semantic-ui-react";
+import React, { useContext, useState } from "react";
+import { Button, Form } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
+import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
 
-const Register = (props) => {
+function Register(props) {
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
   const { onChange, onSubmit, values } = useForm(registerUser, {
@@ -16,12 +18,11 @@ const Register = (props) => {
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(_, result) {
-      console.log(result);
+    update(_, { data: { register: userData } }) {
+      context.login(userData);
       props.history.push("/");
     },
     onError(err) {
-      console.log(err.graphQLErrors[0].extensions.exception.errors);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     variables: values,
@@ -32,37 +33,41 @@ const Register = (props) => {
   }
 
   return (
-    <div className="register">
-      <h1 className="register__heading">Register</h1>
+    <div className="form-container">
       <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
+        <h1>Register</h1>
         <Form.Input
           label="Username"
-          placeholder="Username"
+          placeholder="Username.."
           name="username"
+          type="text"
           value={values.username}
           error={errors.username ? true : false}
           onChange={onChange}
         />
         <Form.Input
           label="Email"
-          placeholder="Email"
+          placeholder="Email.."
           name="email"
+          type="email"
           value={values.email}
           error={errors.email ? true : false}
           onChange={onChange}
         />
         <Form.Input
-          label="Password "
-          placeholder="Password"
+          label="Password"
+          placeholder="Password.."
           name="password"
+          type="password"
           value={values.password}
           error={errors.password ? true : false}
           onChange={onChange}
         />
         <Form.Input
-          label="Confirm Password "
-          placeholder="Confirm Password"
+          label="Confirm Password"
+          placeholder="Confirm Password.."
           name="confirmPassword"
+          type="password"
           value={values.confirmPassword}
           error={errors.confirmPassword ? true : false}
           onChange={onChange}
@@ -82,7 +87,7 @@ const Register = (props) => {
       )}
     </div>
   );
-};
+}
 
 const REGISTER_USER = gql`
   mutation register(
@@ -100,11 +105,12 @@ const REGISTER_USER = gql`
       }
     ) {
       id
-      username
       email
+      username
       createdAt
       token
     }
   }
 `;
+
 export default Register;
