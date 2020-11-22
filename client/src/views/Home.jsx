@@ -18,7 +18,7 @@ function Home() {
   return user ? (
     <Grid columns={3} style={{ margin: "0" }}>
       <Grid.Row style={{ margin: "50px 0 100px 0" }}>
-        <h1 className="home__title">Recent Posts</h1>
+        <h1 className="home__title">@{user.username}'s feed</h1>
       </Grid.Row>
       <Grid.Row style={{ margin: "0", padding: "0 20px" }}>
         {user && (
