@@ -1,7 +1,7 @@
-import React, { useContext, useState, useRef } from 'react';
-import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import moment from 'moment';
+import React, { useContext, useState, useRef } from "react";
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import moment from "moment";
 import {
   Button,
   Card,
@@ -9,42 +9,43 @@ import {
   Grid,
   Image,
   Icon,
-  Label
-} from 'semantic-ui-react';
+  Label,
+} from "semantic-ui-react";
 
-import { AuthContext } from '../context/auth';
-import LikeButton from '../components/LikeButton';
-import DeleteButton from '../components/DeleteButton';
-import MyPopup from '../util/MyPopup';
+import { AuthContext } from "../context/auth";
+import LikeButton from "../components/LikeButton.jsx";
+import DeleteButton from "../components/DeleteButton.jsx";
+import MyPopup from "../util/MyPopup";
+import { Link } from "react-router-dom";
 
 function SinglePost(props) {
   const postId = props.match.params.postId;
   const { user } = useContext(AuthContext);
   const commentInputRef = useRef(null);
 
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
 
   const {
-    data: { getPost }
+    data: { getPost },
   } = useQuery(FETCH_POST_QUERY, {
     variables: {
-      postId
-    }
+      postId,
+    },
   });
 
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
     update() {
-      setComment('');
+      setComment("");
       commentInputRef.current.blur();
     },
     variables: {
       postId,
-      body: comment
-    }
+      body: comment,
+    },
   });
 
   function deletePostCallback() {
-    props.history.push('/');
+    props.history.push("/");
   }
 
   let postMarkup;
@@ -59,7 +60,7 @@ function SinglePost(props) {
       comments,
       likes,
       likeCount,
-      commentCount
+      commentCount,
     } = getPost;
 
     postMarkup = (
@@ -67,7 +68,7 @@ function SinglePost(props) {
         <Grid.Row>
           <Grid.Column width={2}>
             <Image
-              src="https://react.semantic-ui.com/images/avatar/large/molly.png"
+              src="https://miguellegaspi.com/media/miguel-avatar.png"
               size="small"
               float="right"
             />
@@ -83,18 +84,25 @@ function SinglePost(props) {
               <Card.Content extra>
                 <LikeButton user={user} post={{ id, likeCount, likes }} />
                 <MyPopup content="Comment on post">
-                  <Button
-                    as="div"
-                    labelPosition="right"
-                    onClick={() => console.log('Comment on post')}
-                  >
-                    <Button basic color="blue">
-                      <Icon name="comments" />
+                  {!user ? (
+                    <Button as={Link} to="/login" labelPosition="right">
+                      <Button basic color="blue">
+                        <Icon name="comments" />
+                      </Button>
+                      <Label basic color="blue" pointing="left">
+                        {commentCount}
+                      </Label>
                     </Button>
-                    <Label basic color="blue" pointing="left">
-                      {commentCount}
-                    </Label>
-                  </Button>
+                  ) : (
+                    <Button as="div" labelPosition="right">
+                      <Button basic color="blue">
+                        <Icon name="comments" />
+                      </Button>
+                      <Label basic color="blue" pointing="left">
+                        {commentCount}
+                      </Label>
+                    </Button>
+                  )}
                 </MyPopup>
                 {user && user.username === username && (
                   <DeleteButton postId={id} callback={deletePostCallback} />
@@ -118,7 +126,7 @@ function SinglePost(props) {
                       <button
                         type="submit"
                         className="ui button teal"
-                        disabled={comment.trim() === ''}
+                        disabled={comment.trim() === ""}
                         onClick={submitComment}
                       >
                         Submit
