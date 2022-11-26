@@ -1,6 +1,20 @@
-# Greetings
+## Greetings
 
-Greetings, everyone! 👋 Welcome to...Greetings, which is a social media application where users can register, login, create posts as well as comment on and like other users' posts. Built with React.js, Semantic UI, Express.js, Apollo, GraphQL and MongoDB.
+<img
+  src="https://media.tenor.com/z2xJqhCpneIAAAAM/wave-hand.gif"
+  alt="GIF with a hand waving"
+  loading="lazy"
+  width="150"
+  height="150"
+/>
+
+Greetings is a social media application where users can register, login, create posts as well as comment on and like other users' posts.
+
+Click [here](https://nickl-dev-greetings.netlify.app/) to see demo.
+
+Developed with `JavaScript, React, Semantic UI, Express, Apollo, GraphQL, MongoDB`
+
+---
 
 ### Available Scripts
 
